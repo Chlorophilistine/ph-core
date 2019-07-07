@@ -7,7 +7,7 @@
     using Dtos;
     using Microsoft.AspNetCore.Mvc;
 
-    public class NotesController : ApiController
+    public class NotesController : ControllerBase
     {
         private readonly INotesRepository _notesRepository;
 
@@ -18,8 +18,7 @@
 
         [HttpPut]
         [Route(CustomerRoutes.Note)]
-        [ResponseType(typeof(void))]
-        public async Task<IHttpActionResult> PutNote(int noteId, NoteDetailDto noteDetailDto)
+        public async Task<IActionResult> PutNote(int noteId, NoteDetailDto noteDetailDto)
         {
             if (!ModelState.IsValid)
             {
@@ -33,13 +32,12 @@
 
             await _notesRepository.UpdateNote(noteDetailDto.ToModel());
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return NoContent();
         }
 
         [HttpPost]
         [Route(CustomerRoutes.Notes)]
-        [ResponseType(typeof(NoteDetailDto))]
-        public async Task<IHttpActionResult> PostNote(NewNoteDto newNoteDto)
+        public async Task<ActionResult<NoteDetailDto>> PostNote(NewNoteDto newNoteDto)
         {
             if (!ModelState.IsValid)
             {

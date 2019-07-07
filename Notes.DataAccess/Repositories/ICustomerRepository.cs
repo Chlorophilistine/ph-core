@@ -11,6 +11,6 @@
         Task<Result> UpdateCustomerStatus(int customerId, Status newStatus);
         Task<CustomerDetail> AddCustomer(CustomerDetail customerDetail);
         Task<(Result result, CustomerDetail customer)> DeleteCustomer(int customerId);
-        IEnumerable<NoteDetail> GetCustomerNotes(int customerId);
+        Task<IEnumerable<NoteDetail>> GetCustomerNotes(int customerId);
     }
 }

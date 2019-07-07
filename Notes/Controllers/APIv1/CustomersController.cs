@@ -1,9 +1,7 @@
 ﻿namespace Notes.Controllers.APIv1
 {
     using System.Collections.Generic;
-    using System.Composition;
     using System.Linq;
-    using System.Net;
     using System.Threading.Tasks;
     using DataAccess.Models;
     using DataAccess.Repositories;
@@ -47,10 +45,12 @@
 
         [HttpGet]
         [Route(CustomerRoutes.CustomerNotes)]
-        public ActionResult<IEnumerable<NoteDetailDto>> GetNotes(int customerId)
+        public async Task<ActionResult<IEnumerable<NoteDetailDto>>> GetNotes(int customerId)
         {
-            return _customerRepository
-                .GetCustomerNotes(customerId)
+            var notes = await _customerRepository
+                .GetCustomerNotes(customerId);
+
+            return notes
                 .Select(nd => nd.ToDto())
                 .ToArray();
         }

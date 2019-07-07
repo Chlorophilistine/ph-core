@@ -49,7 +49,7 @@
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CustomerExists(customerId))
+                if (!(await CustomerExists(customerId)))
                 {
                     return Result.NotFound;
                 }
@@ -85,17 +85,17 @@
             return (Result.Completed, customer.ToModel());
         }
 
-        public IEnumerable<NoteDetail> GetCustomerNotes(int customerId)
+        public async Task<IEnumerable<NoteDetail>> GetCustomerNotes(int customerId)
         {
-            return _context.Notes
+            return await _context.Notes
                 .Where(n => n.CustomerId == customerId)
                 .Select(Mapper.ToNoteDetails)
-                .ToArray();
+                .ToArrayAsync();
         }
 
-        private bool CustomerExists(int id)
+        private async Task<bool> CustomerExists(int id)
         {
-            return _context.Customers.Count(e => e.Id == id) > 0;
+            return await _context.Customers.CountAsync(e => e.Id == id) > 0;
         }
     }
 }
