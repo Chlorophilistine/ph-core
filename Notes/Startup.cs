@@ -32,7 +32,7 @@
 
             services.AddEntityFrameworkSqlServer();
             services.AddDbContext<CustomerContext>(options =>
-                options.UseSqlServer(@"Server = (localdb)\mssqllocaldb; Database = NotesDb; Trusted_Connection = True; ConnectRetryCount = 0"));
+                options.UseSqlServer(Configuration.GetConnectionString("NotesApp")));
 
             services.Configure<CookiePolicyOptions>(options =>
             {

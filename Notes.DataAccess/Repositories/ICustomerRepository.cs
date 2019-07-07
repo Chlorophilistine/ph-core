@@ -6,7 +6,7 @@
 
     public interface ICustomerRepository
     {
-        IEnumerable<CustomerSummary> GetCustomerSummaries();
+        Task<IEnumerable<CustomerSummary>> GetCustomerSummaries();
         Task<(Result result, CustomerDetail customer)> GetCustomerDetail(int customerId);
         Task<Result> UpdateCustomerStatus(int customerId, Status newStatus);
         Task<CustomerDetail> AddCustomer(CustomerDetail customerDetail);

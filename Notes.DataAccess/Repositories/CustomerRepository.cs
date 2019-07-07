@@ -17,11 +17,11 @@
             _context = context;
         }
 
-        public IEnumerable<CustomerSummary> GetCustomerSummaries()
+        public async Task<IEnumerable<CustomerSummary>> GetCustomerSummaries()
         {
-            return _context.Customers
+            return await _context.Customers
                 .Select(Mapper.AsCustomerSummary)
-                .ToArray();
+                .ToArrayAsync();
         }
 
         public async Task<(Result, CustomerDetail)> GetCustomerDetail(int customerId)
