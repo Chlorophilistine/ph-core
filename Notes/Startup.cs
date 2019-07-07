@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using DataAccess;
+    using DataAccess.Repositories;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -31,8 +32,11 @@
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddEntityFrameworkSqlServer();
-            services.AddDbContext<CustomerContext>(options =>
+            services.AddDbContext<ICustomerContext, CustomerContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("NotesApp")));
+
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<INotesRepository, NotesRepository>();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
